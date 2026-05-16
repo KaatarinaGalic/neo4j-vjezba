@@ -142,3 +142,42 @@ MATCH (b:Osoba {ime: 'Leonardo DiCaprio'})
 RETURN EXISTS {
   MATCH (a)-[*1..4]-(b)
 } AS povezani
+
+//Zadatak 6
+//22.Ukupan broj filmova i prosječna ocjena
+MATCH (f:Film)
+RETURN count(f) AS broj_filmova,
+       avg(f.ocjena) AS prosjecna_ocjena
+
+
+//23. Broj filmova po žanru i maksimalna ocjena
+MATCH (f:Film)
+WITH f.zanr AS zanr,
+     count(f) AS broj_filmova,
+     max(f.ocjena) AS max_ocjena
+
+RETURN zanr, broj_filmova, max_ocjena
+ORDER BY broj_filmova DESC
+
+
+//24. Osoba koja živi u gradu s najviše osoba
+MATCH (o:Osoba)-[:ZIVI_U]->(g:Grad)
+
+WITH g, count(o) AS broj_osoba
+ORDER BY broj_osoba DESC
+LIMIT 1
+
+MATCH (osoba:Osoba)-[:ZIVI_U]->(g)
+
+RETURN g.naziv AS grad,
+       collect(osoba.ime) AS osobe,
+       broj_osoba
+
+
+
+//25.Lista glumaca za svaki film
+MATCH (o:Osoba)-[:GLUMIO_U]->(f:Film)
+
+RETURN f.naslov AS film,
+       collect(o.ime) AS glumci
+ORDER BY film
