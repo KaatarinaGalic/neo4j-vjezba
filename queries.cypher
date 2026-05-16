@@ -119,3 +119,26 @@ WITH o, count(f) AS broj_filmova
 WHERE broj_filmova > 1
 RETURN o.ime AS redatelj, broj_filmova
 ORDER BY broj_filmova DESC
+
+//Zadatak 5
+//18.Najkraći put između Leonarda i Bong Joon-hoa
+
+MATCH p = shortestPath(
+  (a:Osoba {ime: 'Leonardo DiCaprio'})
+  -[*1..5]-
+  (b:Osoba {ime: 'Bong Joon-ho'})
+)
+RETURN p, length(p) AS duljina_puta
+
+//19.Svi čvorovi udaljeni max 2 veze od Londona
+
+MATCH (g:Grad {naziv: 'London'})-[*1..2]-(n)
+RETURN DISTINCT n
+
+//20.Jesu li Francis Ford Coppola i Leonardo povezani u max 4 koraka
+MATCH (a:Osoba {ime: 'Francis Ford Coppola'})
+MATCH (b:Osoba {ime: 'Leonardo DiCaprio'})
+
+RETURN EXISTS {
+  MATCH (a)-[*1..4]-(b)
+} AS povezani
