@@ -31,3 +31,68 @@ CREATE (o7:Osoba {ime: 'Emma Stone', dob: 36})
 
 //Dodan Grad
 CREATE (g4:Grad {naziv: 'New York'})
+
+//Zadatak 3
+//Korak 3 - VEZE
+
+// REZIRAO
+MATCH (o:Osoba {ime: 'Christopher Nolan'}), (f:Film {naslov: 'Inception'})
+CREATE (o)-[:REZIRAO]->(f)
+
+MATCH (o:Osoba {ime: 'Christopher Nolan'}), (f:Film {naslov: 'The Dark Knight'})
+CREATE (o)-[:REZIRAO]->(f)
+
+MATCH (o:Osoba {ime: 'Christopher Nolan'}), (f:Film {naslov: 'Interstellar'})
+CREATE (o)-[:REZIRAO]->(f)
+
+MATCH (o:Osoba {ime: 'Christopher Nolan'}), (f:Film {naslov: 'Memento'})
+CREATE (o)-[:REZIRAO]->(f)
+
+MATCH (o:Osoba {ime: 'Bong Joon-ho'}), (f:Film {naslov: 'Parasite'})
+CREATE (o)-[:REZIRAO]->(f)
+
+MATCH (o:Osoba {ime: 'Francis Ford Coppola'}), (f:Film {naslov: 'The Godfather'})
+CREATE (o)-[:REZIRAO]->(f)
+
+
+// GLUMIO_U
+MATCH (o:Osoba {ime: 'Leonardo DiCaprio'}), (f:Film {naslov: 'Inception'})
+CREATE (o)-[:GLUMIO_U]->(f)
+
+MATCH (o:Osoba {ime: 'Christian Bale'}), (f:Film {naslov: 'The Dark Knight'})
+CREATE (o)-[:GLUMIO_U]->(f)
+
+
+// ZIVI_U
+MATCH (o:Osoba {ime: 'Christopher Nolan'}), (g:Grad {naziv: 'London'})
+CREATE (o)-[:ZIVI_U]->(g)
+
+MATCH (o:Osoba {ime: 'Leonardo DiCaprio'}), (g:Grad {naziv: 'Los Angeles'})
+CREATE (o)-[:ZIVI_U]->(g)
+
+MATCH (o:Osoba {ime: 'Bong Joon-ho'}), (g:Grad {naziv: 'Seoul'})
+CREATE (o)-[:ZIVI_U]->(g)
+
+
+// PRIJATELJ
+MATCH (a:Osoba {ime: 'Christopher Nolan'}), (b:Osoba {ime: 'Christian Bale'})
+CREATE (a)-[:PRIJATELJ {od: 2000}]->(b)
+
+MATCH (a:Osoba {ime: 'Leonardo DiCaprio'}), (b:Osoba {ime: 'Christopher Nolan'})
+CREATE (a)-[:PRIJATELJ {od: 2010}]->(b)
+
+//10. svi čvorovi i sve veze između njih
+MATCH (n)-[r]->(m) RETURN n, r, m
+
+//zadatak 11 dodane veze GLUMIO_U
+MATCH (o:Osoba {ime: 'Tom Hanks'}), (f:Film {naslov: 'Inception'})
+CREATE (o)-[:GLUMIO_U]->(f)
+
+MATCH (o:Osoba {ime: 'Emma Stone'}), (f:Film {naslov: 'Parasite'})
+CREATE (o)-[:GLUMIO_U]->(f)
+
+// 12. provjera veza
+MATCH ()-[r]->()
+RETURN type(r) AS tip, count(*) AS broj
+ORDER BY broj DESC
+
