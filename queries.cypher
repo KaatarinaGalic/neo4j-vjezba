@@ -96,3 +96,26 @@ MATCH ()-[r]->()
 RETURN type(r) AS tip, count(*) AS broj
 ORDER BY broj DESC
 
+//Zadatak 4
+//13. Filmovi žanra “triler”
+MATCH (f:Film)
+WHERE f.zanr = 'triler'
+RETURN f.naslov, f.godina
+ORDER BY f.godina ASC
+
+//14.Redatelj i grad gdje živi
+MATCH (o:Osoba)-[:ZIVI_U]->(g:Grad)
+RETURN o.ime AS redatelj, g.naziv AS grad
+
+//15.
+MATCH (f:Film)
+WHERE f.godina >= 2008 AND f.godina <= 2015
+RETURN f.naslov, f.godina
+ORDER BY f.godina
+
+//16. Redatelji koji su snimili više od 1 filma
+MATCH (o:Osoba)-[:REZIRAO]->(f:Film)
+WITH o, count(f) AS broj_filmova
+WHERE broj_filmova > 1
+RETURN o.ime AS redatelj, broj_filmova
+ORDER BY broj_filmova DESC
