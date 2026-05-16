@@ -181,3 +181,170 @@ MATCH (o:Osoba)-[:GLUMIO_U]->(f:Film)
 RETURN f.naslov AS film,
        collect(o.ime) AS glumci
 ORDER BY film
+
+//ZAVRŠNI ZADATAK
+//ČVOROVI- IZVOĐAČ,ŽANR I ALBUM
+// IZVODACI
+CREATE (:Izvodac {ime: 'Taylor Swift', drzava: 'USA', godina_osnivanja: 2006})
+CREATE (:Izvodac {ime: 'Drake', drzava: 'Canada', godina_osnivanja: 2009})
+CREATE (:Izvodac {ime: 'Billie Eilish', drzava: 'USA', godina_osnivanja: 2015})
+CREATE (:Izvodac {ime: 'Ed Sheeran', drzava: 'UK', godina_osnivanja: 2004})
+CREATE (:Izvodac {ime: 'The Weeknd', drzava: 'Canada', godina_osnivanja: 2010})
+CREATE (:Izvodac {ime: 'Dua Lipa', drzava: 'UK', godina_osnivanja: 2015})
+
+
+// ALBUMI
+CREATE (:Album {naziv: '1989', godina: 2014, ocjena: 8.7})
+CREATE (:Album {naziv: 'Red', godina: 2012, ocjena: 8.5})
+CREATE (:Album {naziv: 'Scorpion', godina: 2018, ocjena: 8.2})
+CREATE (:Album {naziv: 'Views', godina: 2016, ocjena: 7.9})
+CREATE (:Album {naziv: 'When We All Fall Asleep', godina: 2019, ocjena: 9.0})
+CREATE (:Album {naziv: 'Happier Than Ever', godina: 2021, ocjena: 8.8})
+CREATE (:Album {naziv: 'Divide', godina: 2017, ocjena: 8.9})
+CREATE (:Album {naziv: 'Multiply', godina: 2014, ocjena: 8.4})
+CREATE (:Album {naziv: 'After Hours', godina: 2020, ocjena: 9.1})
+CREATE (:Album {naziv: 'Starboy', godina: 2016, ocjena: 8.6})
+
+
+// ZANROVI
+CREATE (:Zanr {naziv: 'Pop'})
+CREATE (:Zanr {naziv: 'HipHop'})
+CREATE (:Zanr {naziv: 'R&B'})
+CREATE (:Zanr {naziv: 'Indie'})
+
+//VEZE
+//OBJAVIO
+// OBJAVIO
+
+MATCH (a:Izvodac {ime:'Taylor Swift'}), (b:Album {naziv:'1989'})
+CREATE (a)-[:OBJAVIO]->(b);
+
+MATCH (a:Izvodac {ime:'Taylor Swift'}), (b:Album {naziv:'Red'})
+CREATE (a)-[:OBJAVIO]->(b);
+
+MATCH (a:Izvodac {ime:'Drake'}), (b:Album {naziv:'Scorpion'})
+CREATE (a)-[:OBJAVIO]->(b);
+
+MATCH (a:Izvodac {ime:'Drake'}), (b:Album {naziv:'Views'})
+CREATE (a)-[:OBJAVIO]->(b);
+
+MATCH (a:Izvodac {ime:'Billie Eilish'}), (b:Album {naziv:'When We All Fall Asleep'})
+CREATE (a)-[:OBJAVIO]->(b);
+
+MATCH (a:Izvodac {ime:'Billie Eilish'}), (b:Album {naziv:'Happier Than Ever'})
+CREATE (a)-[:OBJAVIO]->(b);
+
+MATCH (a:Izvodac {ime:'Ed Sheeran'}), (b:Album {naziv:'Divide'})
+CREATE (a)-[:OBJAVIO]->(b);
+
+MATCH (a:Izvodac {ime:'Ed Sheeran'}), (b:Album {naziv:'Multiply'})
+CREATE (a)-[:OBJAVIO]->(b);
+
+MATCH (a:Izvodac {ime:'The Weeknd'}), (b:Album {naziv:'After Hours'})
+CREATE (a)-[:OBJAVIO]->(b);
+
+MATCH (a:Izvodac {ime:'The Weeknd'}), (b:Album {naziv:'Starboy'})
+CREATE (a)-[:OBJAVIO]->(b);
+
+// PRIPADA_ZANRU
+
+MATCH (a:Album {naziv:'1989'}), (z:Zanr {naziv:'Pop'})
+CREATE (a)-[:PRIPADA_ZANRU]->(z);
+
+MATCH (a:Album {naziv:'Red'}), (z:Zanr {naziv:'Pop'})
+CREATE (a)-[:PRIPADA_ZANRU]->(z);
+
+MATCH (a:Album {naziv:'Scorpion'}), (z:Zanr {naziv:'HipHop'})
+CREATE (a)-[:PRIPADA_ZANRU]->(z);
+
+MATCH (a:Album {naziv:'Views'}), (z:Zanr {naziv:'HipHop'})
+CREATE (a)-[:PRIPADA_ZANRU]->(z);
+
+MATCH (a:Album {naziv:'When We All Fall Asleep'}), (z:Zanr {naziv:'Indie'})
+CREATE (a)-[:PRIPADA_ZANRU]->(z);
+
+MATCH (a:Album {naziv:'Happier Than Ever'}), (z:Zanr {naziv:'Indie'})
+CREATE (a)-[:PRIPADA_ZANRU]->(z);
+
+MATCH (a:Album {naziv:'Divide'}), (z:Zanr {naziv:'Pop'})
+CREATE (a)-[:PRIPADA_ZANRU]->(z);
+
+MATCH (a:Album {naziv:'Multiply'}), (z:Zanr {naziv:'Pop'})
+CREATE (a)-[:PRIPADA_ZANRU]->(z);
+
+MATCH (a:Album {naziv:'After Hours'}), (z:Zanr {naziv:'R&B'})
+CREATE (a)-[:PRIPADA_ZANRU]->(z);
+
+MATCH (a:Album {naziv:'Starboy'}), (z:Zanr {naziv:'R&B'})
+CREATE (a)-[:PRIPADA_ZANRU]->(z);
+
+// SLICAN
+
+MATCH (a:Izvodac {ime:'Taylor Swift'}), (b:Izvodac {ime:'Ed Sheeran'})
+CREATE (a)-[:SLICAN]->(b);
+
+MATCH (a:Izvodac {ime:'Drake'}), (b:Izvodac {ime:'The Weeknd'})
+CREATE (a)-[:SLICAN]->(b);
+
+MATCH (a:Izvodac {ime:'Billie Eilish'}), (b:Izvodac {ime:'Dua Lipa'})
+CREATE (a)-[:SLICAN]->(b);
+
+MATCH (a:Izvodac {ime:'Ed Sheeran'}), (b:Izvodac {ime:'Dua Lipa'})
+CREATE (a)-[:SLICAN]->(b);
+
+// SURADIVAO_S
+
+MATCH (a:Izvodac {ime:'Drake'}), (b:Izvodac {ime:'The Weeknd'})
+CREATE (a)-[:SURADIVAO_S]->(b);
+
+MATCH (a:Izvodac {ime:'Taylor Swift'}), (b:Izvodac {ime:'Ed Sheeran'})
+CREATE (a)-[:SURADIVAO_S]->(b);
+
+//MATCH UPITI - albumi izvođača
+
+MATCH (i:Izvodac {ime:'Taylor Swift'})-[:OBJAVIO]->(a:Album)
+RETURN a.naziv, a.godina
+ORDER BY a.godina
+
+//WHERE ocjena > 8
+MATCH (i:Izvodac)-[:OBJAVIO]->(a:Album)
+WHERE a.ocjena > 8.0
+RETURN i.ime, a.naziv, a.ocjena
+
+//OPTIONAL MATCH
+MATCH (i:Izvodac)
+OPTIONAL MATCH (i)-[:OBJAVIO]->(a:Album)
+RETURN i.ime, count(a) AS broj_albuma
+
+//shortestPath (GLAZBA)
+
+MATCH p = shortestPath(
+  (a:Izvodac {ime:'Taylor Swift'})
+  -[*1..5]-
+  (b:Izvodac {ime:'The Weeknd'})
+)
+RETURN p
+
+//Agregacija po zanru
+
+MATCH (a:Album)-[:PRIPADA_ZANRU]->(z:Zanr)
+WITH z.naziv AS zanr,
+     count(a) AS broj,
+     avg(a.ocjena) AS prosjek
+WHERE prosjek > 7.5
+RETURN zanr, broj, prosjek
+
+//CONSTRAINT
+CREATE CONSTRAINT izvodac_ime_unique
+FOR (i:Izvodac)
+REQUIRE i.ime IS UNIQUE
+
+//INDEX
+CREATE INDEX album_ocjena_index
+FOR (a:Album)
+ON (a.ocjena)
+
+SHOW CONSTRAINTS
+
+SHOW INDEXES
+

@@ -21,3 +21,8 @@ Na primjer: MATCH (o)-[:REZIRAO]->(f) vraća samo osobe koje su režirale filmov
 
 Ako shortestPath ne pronađe put između dva čvora, upit ne vraća nijedan path rezultat.  
 U tom slučaju vrijednost puta je NULL jer između čvorova ne postoji povezanost u grafu.
+
+## Zavrsni
+Neo4j bih koristila umjesto PostgreSQL-a u slučajevima kada su odnosi između podataka jednako važni kao i sami podaci, primjerice u glazbenim preporukama, društvenim mrežama ili recommendation sustavima. U takvim sustavima bitno je brzo pronalaženje povezanih izvođača, sličnih glazbenika i kolaboracija.
+U relacijskom modelu ovakvi problemi zahtijevaju više JOIN operacija koje postaju kompleksne i spore kako raste broj tablica i veza. Posebno je teško efikasno rješavati probleme poput pronalaska najkraćih puteva ili “sličnosti” između izvođača.
+U Neo4j graf modelu takvi upiti su prirodni jer su veze eksplicitno pohranjene i traversal kroz graf je vrlo brz. Najteže rješiv problem u relacijskom modelu bio bi recommendation sustav koji koristi više razina povezanosti (npr. izvođač --> suradnja --> slični izvođač --> žanr).
